@@ -11,3 +11,36 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.startbutton {
+  border: 0.3vw solid darkblue;
+  box-shadow: inset 0 0 10px;
+  background-color: green;
+  color: rgb(15, 14, 14);
+  font-size: 1vw;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  width: 10vw;
+  height: 5vh;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.startbox {
+  padding: 1vh 1vw 0vh 1vw;
+  border: 0.4vw solid rgb(2, 37, 2);
+  height: 15vh;
+  width: 20vh;
+}
+.startbutton:hover {
+  border: 0.3vw solid darkblue;
+  box-shadow: inset 0 0 10px;
+  background-color: darkgreen;
+  color: rgb(15, 14, 14);
+  font-size: 1vw;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  width: 10vw;
+  height: 5vh;
+  border-radius: 50%;
+  cursor: pointer;
+}
