@@ -1,19 +1,37 @@
-import {ReactComponent as Player1} from './assets/clean/player1-clean.svg';
-import './App.css';
+import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import HomePage from "./Home.jsx";
+import "./App.css";
+import SingleplayerStartPage from "./SingleStart.jsx";
+import MultiplayerStartPage from "./MultiStart.jsx";
+import MultiplayerStartPageLocal from "./MultiStartLocal.jsx";
+import MultiplayerStartPageOnline from "./MultiStartOnline.jsx";
+import LoginPage from "./Login.jsx";
+import SignUpPage from "./SignUp.jsx";
+import ConfirmationPage from "./Confirmation.jsx";
 
 function App() {
+  const [count, setCount] = useState(0);
+
   return (
-    <div id="Background" style={{background: "black", height: "10vh", width: "10vw", padding: "45vh 45vw"}}>
-      {/* <Player1 style={{width: "100px", height: "100px"}} /> */}
-      <div id='startbox' className='startbox'>
-        <button id='singleplayer' className='startbutton'>Single Player</button>
-        <br />
-        <br />
-        <button id='multiplayer' className='startbutton'>Multiplayer</button> 
-        /*Multiplayer is not supported yet */
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/singleplayerstart" element={<SingleplayerStartPage />} />
+        <Route path="/multiplayerstart" element={<MultiplayerStartPage />} />
+        <Route path="/multiplayerstartlocal" element={<MultiplayerStartPageLocal />} />
+        <Route path="/multiplayerstartonline" element={<MultiplayerStartPageOnline />} />
+        <Route path="/confirmation" element={<ConfirmationPage />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
+
