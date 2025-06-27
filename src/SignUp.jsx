@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import {ReactComponent as Player1} from './assets/clean/player1-clean.svg';
-import {setNavigate, signUp} from './backend';
+import {setNavigate, handleSignUp} from './backend';
 import { useEffect } from 'react';
-// Function to send email using EmailJS
 const SignUpPage = () => {
     const navigate = useNavigate();
     useEffect(() => {
@@ -10,7 +9,7 @@ const SignUpPage = () => {
     }, [navigate]);
     return (
         <div id="Background" className='background'>
-            <form onSubmit={signUp}>
+            <form onSubmit={handleSignUp}>
                 <div id="signUpForm" className='startbox' style={{height: "75vh"}}>
                     <div id="FormTitle" style={{fontWeight: "bold"}}>
                         <h1>SIGN UP</h1>

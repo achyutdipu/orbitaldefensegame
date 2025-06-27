@@ -1,9 +1,13 @@
 import {ReactComponent as Player1} from './assets/clean/player1-clean.svg';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { rerout } from './backend';
 
 const SingleplayerStartPage = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+          rerout(navigate);
+      }, [navigate])
   const [numGames, setNumGames] = useState(0);
   
   return (
