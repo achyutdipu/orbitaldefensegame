@@ -83,6 +83,24 @@ code {
   background-color: darkgreen;
   outline: 0.3vw outset rgb(1, 1, 83);
 }
+.tobeadded {
+  border: 0.3vw solid darkslategray;
+  outline: 0.3vw inset rgb(23, 39, 39);
+  box-shadow: inset 0 0 10px;
+  background-color: gray;
+  color: rgb(15, 14, 14);
+  font-size: 1vw;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  width: 10vw;
+  height: 5vh;
+  transform: skew(-20deg);
+  cursor: pointer;
+}
+.tobeadded:hover {
+  background-color: rgb(75, 75, 75);
+  outline: 0.3vw outset rgb(23, 39, 39);
+}
 .multiplayerbutton {
   border: 0.3vw solid darkblue;
   outline: 0.3vw inset rgb(1, 1, 83);

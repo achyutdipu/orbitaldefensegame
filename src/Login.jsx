@@ -27,6 +27,7 @@ const LoginPage = () => {
                     </div>
                     <button id='submitButton' className='startbutton' style={{marginTop: "2vh"}}>Log In</button>
                     <p>Don't have an account? Sign up <a href='./signup'>here</a>.</p>
+                    <p>Forgot your password? Sign up with an already existing account.</p>
                 </div>
             </form>
         </div>

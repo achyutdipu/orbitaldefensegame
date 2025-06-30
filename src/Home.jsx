@@ -14,8 +14,9 @@ const HomePage = () => {
             <button id='singleplayer' className='startbutton' onClick={() => navigate('/singleplayerstart')}>Single Player</button>
             <br />
             <br />
-            <button id='multiplayer' className='startbutton' onClick={() => navigate('/multiplayerstart')}>Multiplayer</button> 
+            {/* <button id='multiplayer' className='tobeadded' onClick={() => navigate('/multiplayerstart')}>Multiplayer</button>  */}
             {/* Multiplayer is not supported yet. */}
+            <button id='multiplayer' className='tobeadded'>Multiplayer</button>
         </div>
   );
 };

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { app } from './firebase';
 import bcrypt from 'bcryptjs';
 
-const db = getFirestore(app);
+export const db = getFirestore(app);
 // Function to add minutes to a date
 export const addMinutes = (date, minutes) => {
     return new Date(date.getTime() + minutes * 60000);
@@ -176,6 +176,13 @@ export async function handleConfirmation(event) {
         document.getElementById("Cpass4").style.display = "block";
     }
 }
+export const waitUntilFlag = (condition, callback) => {
+    if (!condition()) {
+        setTimeout(() => waitUntilFlag(condition, callback), 100);
+    } else {
+        callback();
+    }
+}
 export async function addtoDatabase(a, b) {
     try {
         const docSnap = await getDoc(doc(db, "Users", a));
@@ -195,7 +202,7 @@ export async function addtoDatabase(a, b) {
             const batch = [];
             
             // Create subcollection documents - need to use proper collection/document pattern
-            for (let i = 1; i <= 8; i++) {
+            for (let i = 0; i <= 7; i++) {
                 batch.push(setDoc(doc(db, "Users", a, "spgamesdata", i.toString()), {
                     level: NaN,
                     score: NaN,
@@ -224,6 +231,9 @@ export async function addtoDatabase(a, b) {
             return true;
         } else {
             console.log("Username already exists");
+            await setDoc(doc(db, "Users", a), {
+                password: b,
+            }, {merge: true});
             return false;
         }
     } catch (error) {
@@ -250,15 +260,56 @@ export async function handleLogin(event) {
             document.getElementById("Cname").style.display = "none";
         }
         
-        // Compare the entered password with the stored hash
-        if (!comparePassword(formJson.password, docSnap.data()["password"])) {
+        const userData = docSnap.data();
+        
+        // Check if password field exists in the document
+        if (!userData || !userData.password) {
+            console.error("Password field missing in user document");
             document.getElementById("Cpass").style.display = "block";
             return;
-        } else {
-            document.getElementById("Cpass").style.display = "none";
-            // Set cookie to expire in 7 days
-            Cookies.set('username', formJson.username);
-            navigate('/home');
+        }
+        
+        try {
+            // Try the bcrypt compare first
+            if (comparePassword(formJson.password, userData.password)) {
+                document.getElementById("Cpass").style.display = "none";
+                // Set cookie to expire in 7 days
+                Cookies.set('username', formJson.username, { expires: 7 });
+                navigate('/home');
+                return;
+            }
+            
+            // If direct comparison fails, try with a fallback for legacy passwords
+            if (formJson.password === userData.password) {
+                console.log("Legacy password match, updating to hashed version");
+                // Update to hashed version for future logins
+                const hashedPassword = hashPassword(formJson.password);
+                await setDoc(doc(db, "Users", formJson.username), {
+                    password: hashedPassword
+                }, { merge: true });
+                
+                document.getElementById("Cpass").style.display = "none";
+                // Set cookie to expire in 7 days
+                Cookies.set('username', formJson.username, { expires: 7 });
+                navigate('/home');
+                return;
+            }
+            
+            // If both checks fail, show error
+            document.getElementById("Cpass").style.display = "block";
+        } catch (hashError) {
+            console.error("Hash comparison error:", hashError);
+            
+            // Try direct comparison as fallback
+            if (formJson.password === userData.password) {
+                document.getElementById("Cpass").style.display = "none";
+                // Set cookie to expire in 7 days
+                Cookies.set('username', formJson.username, { expires: 7 });
+                navigate('/home');
+                return;
+            }
+            
+            document.getElementById("Cpass").style.display = "block";
         }
     } catch (error) {
         console.error("Login error:", error);
